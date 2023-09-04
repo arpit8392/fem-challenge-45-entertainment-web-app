@@ -13,9 +13,12 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Logo from "@/public/assets/logo.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import * as z from "zod";
 
 const formSchema = z
@@ -38,6 +41,7 @@ const formSchema = z
   });
 
 const RegisterPage = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,8 +51,14 @@ const RegisterPage = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const response = await axios.post("/api/auth/register", data);
+    if (response.status >= 200 && response.status < 300) {
+      toast.success("User is successfully registered...");
+      router.push("/login");
+    } else {
+      toast.error("Something went wrong!");
+    }
   };
 
   return (

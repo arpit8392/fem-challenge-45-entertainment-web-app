@@ -13,9 +13,12 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Logo from "@/public/assets/logo.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import * as z from "zod";
 
 const formSchema = z.object({
@@ -30,6 +33,7 @@ const formSchema = z.object({
 });
 
 const LoginPage = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,8 +42,26 @@ const LoginPage = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const callback = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      if (callback?.error) {
+        toast.error(callback?.error);
+      }
+
+      if (callback?.ok && !callback.error) {
+        toast.success("Logging in successfully");
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      router.refresh();
+    }
   };
 
   return (

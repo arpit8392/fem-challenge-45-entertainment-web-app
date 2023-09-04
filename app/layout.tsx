@@ -1,26 +1,31 @@
-import { cn } from '@/lib/utils'
-import type { Metadata } from 'next'
-import { Outfit } from 'next/font/google'
-import './globals.css'
+import SessionProvider from "@/components/providers/auth-provider";
+import Toaster from "@/components/providers/toast-provider";
+import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { Outfit } from "next/font/google";
+import "./globals.css";
 
-const outfit = Outfit({ subsets: ['latin'] })
+const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: 'Entertainment Web App',
-	description:
-		'Frontend Mentor Challenge | Solved by Arpit Namdev | Developed using Next JS, Tailwind CSS and many more...',
-}
+  title: "Entertainment Web App",
+  description:
+    "Frontend Mentor Challenge | Solved by Arpit Namdev | Developed using Next JS, Tailwind CSS and many more...",
+};
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode
+  children: React.ReactNode;
 }) {
-	return (
-		<html lang='en' className='h-full'>
-			<body className={cn(outfit.className, 'h-full bg-darkBlue text-white')}>
-				{children}
-			</body>
-		</html>
-	)
+  return (
+    <html lang="en" className="h-full">
+      <body className={cn(outfit.className, "h-full bg-darkBlue text-white")}>
+        <SessionProvider>
+          <Toaster />
+          {children}
+        </SessionProvider>
+      </body>
+    </html>
+  );
 }
