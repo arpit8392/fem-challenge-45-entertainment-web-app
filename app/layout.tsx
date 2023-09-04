@@ -19,8 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
-      <body className={cn(outfit.className, "h-full bg-darkBlue text-white")}>
+    <html lang="en" className="min-h-full">
+      <body
+        className={cn(outfit.className, "min-h-full bg-darkBlue text-white")}
+      >
         <SessionProvider>
           <Toaster />
           {children}
