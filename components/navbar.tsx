@@ -35,9 +35,9 @@ const Navbar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center justify-between bg-semiDarkBlue p-4 md:mx-6 md:mt-6 md:rounded-xl md:p-6 lg:m-8 lg:h-screen lg:w-24 lg:flex-col lg:justify-normal">
+    <nav className="flex items-center justify-between bg-semiDarkBlue p-4 md:rounded-xl md:p-6 lg:h-screen lg:w-24 lg:flex-col lg:justify-normal">
       <Image src={Logo} alt="Logo" />
-      <ul className="flex items-center gap-6 lg:flex-1 lg:flex-col lg:pt-20">
+      <ul className="flex items-center gap-6 lg:flex-1 lg:flex-col lg:gap-10 lg:pt-20">
         {navItems.map(({ title, icon: Icon, href }) => (
           <li key={title}>
             <Link href={href}>

@@ -3,7 +3,7 @@ import SearchBar from "@/components/search-bar";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="lg:flex">
+    <div className="lg:flex gap-9">
       <Navbar />
       <div className="lg:flex-1">
         <SearchBar />
